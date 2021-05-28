@@ -1,0 +1,8 @@
+{
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "javascript.format.enable": false,
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
