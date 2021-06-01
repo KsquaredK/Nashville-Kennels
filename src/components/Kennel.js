@@ -14,11 +14,12 @@ export const Kennel = () => (
       <div> Visit Us at the Nashville North Location </div>{" "}
       <div> 500 Puppy Way </div>{" "}
     </address>{" "}
+    {/* This article is a "route" */}
     <h2> Animals </h2>{" "}
     <article className="animals">
-      <Animal />
-      <Animal />
-      <Animal />
+      <AnimalProvider>
+        <AnimalList />
+      </AnimalProvider>
     </article>{" "}
     <h2> Employees </h2>{" "}
     <article className="employees">
