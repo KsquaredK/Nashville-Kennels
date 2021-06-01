@@ -18,7 +18,7 @@ export const Kennel = () => (
       <div> Visit Us at the Nashville North Location </div>{" "}
       <div> 500 Puppy Way </div>{" "}
     </address>{" "}
-    {/* Each article below is a "route" */}
+    {/* This article is a "route" */}
     <h2> Animals </h2>{" "}
     <article className="animals">
       <AnimalProvider>
