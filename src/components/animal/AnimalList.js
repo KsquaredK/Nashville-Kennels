@@ -15,7 +15,7 @@ export const AnimalList = () => {
     console.log("AnimalList: useEffect - getAnimals");
     getAnimals();
     // The empty brackets cause this logic to run only once.
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section className="animals">
