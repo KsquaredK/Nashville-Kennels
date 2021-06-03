@@ -28,6 +28,7 @@ export const AnimalList = () => {
       <button onClick={() => history.push("/animals/create")}>
         Add Animal
       </button>
+      <p></p>
       <div className="animals">
         {animals.map((animal) => {
           return (

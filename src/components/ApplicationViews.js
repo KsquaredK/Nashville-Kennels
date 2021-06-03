@@ -8,7 +8,7 @@ import { CustomerProvider } from "./customer/CustomerProvider";
 import { CustomerList } from "./customer/CustomerList";
 import { AnimalProvider } from "./animal/AnimalProvider";
 import { AnimalList } from "./animal/AnimalList";
-// import { AnimalForm } from "./animal/AnimalProvider";
+import { AnimalForm } from "./animal/AnimalForm";
 
 export const ApplicationViews = () => {
   return (
@@ -17,15 +17,15 @@ export const ApplicationViews = () => {
         <AnimalProvider>
           <EmployeeProvider>
             <CustomerProvider>
-              <Route exact path="/">
+              <Route path="/locations">
                 <LocationList />
               </Route>
               <Route path="/animals">
                 <AnimalList />
               </Route>
-              {/* <Route exact path="/animals/create">
+              <Route exact path="/animals/create">
                 <AnimalForm />
-              </Route> */}
+              </Route>
               <Route exact path="/customers">
                 <CustomerList />
               </Route>

@@ -12,8 +12,8 @@ export const LocationProvider = (props) => {
   const [locations, setLocations] = useState([]);
 
   const getLocations = () => {
-    return fetch("http://localhost:8088/locations?_expand=location")
-      .then(res => res.json())
+    return fetch("http://localhost:8088/locations")
+      .then((res) => res.json())
       .then(setLocations);
   };
 
