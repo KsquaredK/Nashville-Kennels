@@ -19,16 +19,20 @@ export const LocationList = () => {
 
   return (
     <>
+      <h2>Locations</h2>
       <section className="locations">
+        {console.log("LocationList: Render", locations)}
         {locations.map((location) => {
           return (
             <div
               className="location"
               id={`location--${location.id}`}
               key={location.id}>
-              <div className="location__name">Name: {location.name}</div>
+              <div className="location__name">
+                <em>Name:</em> {location.name}
+              </div>
               <div className="location__address">
-                Address: {location.address}
+                <em>Address:</em> {location.address}
               </div>
             </div>
           );

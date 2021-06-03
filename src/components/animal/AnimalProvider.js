@@ -18,7 +18,18 @@ export const AnimalProvider = (props) => {
       .then((res) => res.json())
       .then(setAnimals);
   };
+  // below is original addAnimal function
+  // const addAnimal = (animalObj) => {
+  //   return fetch("http://localhost:8088/animals", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(animalObj),
+  //   }).then((response) => response.json());
+  // };
 
+  //**Below is new from  Chapter 8 (6.3.21)**/
   const addAnimal = (animalObj) => {
     return fetch("http://localhost:8088/animals", {
       method: "POST",

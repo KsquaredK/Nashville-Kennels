@@ -18,23 +18,25 @@ export const EmployeeList = () => {
   }, []);
 
   return (
-    <section className="employees">
-      {console.log("EmployeeList: Render", employees)}
-      {employees.map((employee) => {
-        return (
-          <div
-            className="employee"
-            id={`employee--${employee.id}`}
-            key={employee.id}>
-            <div className="employee__name">
-              <em>Name:</em> {employee.name}
+    <>
+      <h2>Employees</h2>
+      <section className="employees">
+        {employees.map((employee) => {
+          return (
+            <div
+              className="employee"
+              id={`employee--${employee.id}`}
+              key={employee.id}>
+              <div className="employee__name">
+                <em>Name:</em> {employee.name}
+              </div>
+              <div className="employee__location">
+                <em>Location:</em> {employee.location.name}
+              </div>
             </div>
-            <div className="employee__location">
-              <em>Location:</em> {employee.location.name}
-            </div>
-          </div>
-        );
-      })}
-    </section>
+          );
+        })}
+      </section>
+    </>
   );
 };
