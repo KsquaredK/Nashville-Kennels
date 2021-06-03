@@ -12,19 +12,25 @@ export const EmployeeList = () => {
   //useEffect - reach out to the world for something not handled during render
   // State change causes re-render - be careful not to create infinite loop.
   useEffect(() => {
-    console.log("EmployeeList: useEffect - getEmployees");
+    console.log("EmployeeList: Render", employees);
     getEmployees();
     // The empty brackets cause this logic to run only once.
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="employees">
+      {console.log("EmployeeList: Render", employees)}
       {employees.map((employee) => {
         return (
-          <div className="employee" id={`employee--${employee.id}`}>
-            <div className="employee__name">Name: {employee.name}</div>
+          <div
+            className="employee"
+            id={`employee--${employee.id}`}
+            key={employee.id}>
+            <div className="employee__name">
+              <em>Name:</em> {employee.name}
+            </div>
             <div className="employee__location">
-              Location: {employee.location}
+              <em>Location:</em> {employee.location.name}
             </div>
           </div>
         );

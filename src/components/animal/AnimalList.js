@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 // This context provides an array of animal objects, and 2 functions: getAnimal, addAnimal
 import { AnimalContext } from "./AnimalProvider";
 import "./Animal.css";
+// Add this import at the top
+import { useHistory } from "react-router-dom";
 
 export const AnimalList = () => {
   // This state changes when `getAnimals()` is invoked below
@@ -17,16 +19,29 @@ export const AnimalList = () => {
     // The empty brackets cause this logic to run only once.
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Invoke the useHistory() hook function
+  const history = useHistory();
+
   return (
-    <section className="animals">
-      {animals.map((animal) => {
-        return (
-          <div className="animal" id={`animal--${animal.id}`}>
-            <div className="animal__name">Name: {animal.name}</div>
-            <div className="animal__breed">Breed: {animal.breed}</div>
-          </div>
-        );
-      })}
-    </section>
+    <>
+      <h2>Animals</h2>
+      <button onClick={() => history.push("/animals/create")}>
+        Add Animal
+      </button>
+      <div className="animals">
+        {animals.map((animal) => {
+          return (
+            <div className="animal" id={`animal--${animal.id}`} key={animal.id}>
+              <div className="animal__name">
+                <em>Name:</em> {animal.name}
+              </div>
+              <div className="animal__breed">
+                <em>Breed:</em> {animal.breed}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };

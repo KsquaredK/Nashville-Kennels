@@ -8,33 +8,34 @@ import { CustomerProvider } from "./customer/CustomerProvider";
 import { CustomerList } from "./customer/CustomerList";
 import { AnimalProvider } from "./animal/AnimalProvider";
 import { AnimalList } from "./animal/AnimalList";
+// import { AnimalForm } from "./animal/AnimalProvider";
 
 export const ApplicationViews = () => {
   return (
     <>
       <LocationProvider>
-        <Route exact path="/">
-          <LocationList />
-        </Route>
+        <AnimalProvider>
+          <EmployeeProvider>
+            <CustomerProvider>
+              <Route exact path="/">
+                <LocationList />
+              </Route>
+              <Route path="/animals">
+                <AnimalList />
+              </Route>
+              {/* <Route exact path="/animals/create">
+                <AnimalForm />
+              </Route> */}
+              <Route exact path="/customers">
+                <CustomerList />
+              </Route>
+              <Route exact path="/employees">
+                <EmployeeList />
+              </Route>
+            </CustomerProvider>
+          </EmployeeProvider>
+        </AnimalProvider>
       </LocationProvider>
-
-      <AnimalProvider>
-        <Route path="/animals">
-          <AnimalList />
-        </Route>
-      </AnimalProvider>
-
-      <CustomerProvider>
-        <Route path="/customers">
-          <CustomerList />
-        </Route>
-      </CustomerProvider>
-
-      <EmployeeProvider>
-        <Route path="/employees">
-          <EmployeeList />
-        </Route>
-      </EmployeeProvider>
     </>
   );
 };

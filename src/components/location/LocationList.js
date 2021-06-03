@@ -18,15 +18,22 @@ export const LocationList = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <section className="locations">
-      {locations.map((location) => {
-        return (
-          <div className="location" id={`location--${location.id}`}>
-            <div className="location__name">Name: {location.name}</div>
-            <div className="location__address">Address: {location.address}</div>
-          </div>
-        );
-      })}
-    </section>
+    <>
+      <section className="locations">
+        {locations.map((location) => {
+          return (
+            <div
+              className="location"
+              id={`location--${location.id}`}
+              key={location.id}>
+              <div className="location__name">Name: {location.name}</div>
+              <div className="location__address">
+                Address: {location.address}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+    </>
   );
 };

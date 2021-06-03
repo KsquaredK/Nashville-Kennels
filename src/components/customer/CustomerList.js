@@ -19,14 +19,24 @@ export const CustomerList = () => {
 
   return (
     <section className="customers">
-      {customers.map((customer) => {
-        return (
-          <div className="customer" id={`customer--${customer.id}`}>
-            <div className="customer__name">Name: {customer.name}</div>
-            <div className="customer__address">Address: {customer.address}</div>
+      {console.log("CustomerList: Render", customers)}
+      {customers.map(
+        (customer) => (
+          // {return
+          <div
+            className="customer"
+            id={`customer--${customer.id}`}
+            key={customer.id}>
+            <div className="customer__name">
+              <em>Name:</em> {customer.name}
+            </div>
+            <div className="customer__address">
+              <em>Address:</em> {customer.address}
+            </div>
           </div>
-        );
-      })}
+        )
+        // }
+      )}
     </section>
   );
 };

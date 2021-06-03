@@ -13,7 +13,7 @@ export const CustomerProvider = (props) => {
 
   const getCustomers = () => {
     return fetch("http://localhost:8088/customers?_expand=location")
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setCustomers);
   };
 
