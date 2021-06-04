@@ -16,7 +16,7 @@ export const AnimalList = () => {
   useEffect(() => {
     console.log("AnimalList: useEffect - getAnimals");
     getAnimals();
-    // The empty brackets cause this logic to run only once.
+    // **The empty brackets cause this logic to run only once.**
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Invoke the useHistory() hook function
