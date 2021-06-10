@@ -20,6 +20,14 @@ export const AnimalProvider = (props) => {
       .then(setAnimals);
   };
 
+  const getAnimalById = (animalId) => {
+    return fetch(
+      `https://localhost:8088/animals/${animalId}?_expand=location&_expand=customer`.then(
+        (res) => res.json()
+      )
+    );
+  };
+
   const addAnimal = (animalObj) => {
     return fetch("http://localhost:8088/animals", {
       method: "POST",
@@ -51,6 +59,7 @@ export const AnimalProvider = (props) => {
         getAnimals,
         addAnimal,
         releaseAnimal,
+        getAnimalById,
       }}>
       {props.children}
     </AnimalContext.Provider>
