@@ -6,7 +6,7 @@ import { useParams, useHistory } from "react-router-dom";
 // expose this data to descendants
 export const AnimalDetail = () => {
   // assign AnimalContext data to var  animals
-  const { animals, getAnimalById, releaseAnimal } = useContext(AnimalContext);
+  const { animals, releaseAnimal } = useContext(AnimalContext);
   // store state in array 'animal', using function 'setAnimal' to modify it to include location and customer
   const [animal, setAnimal] = useState({ location: {}, customer: {} });
 

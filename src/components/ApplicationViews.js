@@ -44,7 +44,7 @@ export const ApplicationViews = () => {
                 <AnimalDetail />
               </Route>
               <Route path="/animals/edit/:animalId(\d+)">
-                <AnimalDetail />
+                <AnimalForm />
               </Route>
               <Route path="/customers">
                 <CustomerList />

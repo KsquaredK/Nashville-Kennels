@@ -1,7 +1,6 @@
 // paste from Cap 9
 import React, { useState, useContext, useEffect } from "react";
 import { AnimalContext } from "./AnimalProvider";
-// import { Animal } from "./Animal";
 import { Link, useHistory } from "react-router-dom";
 import "./Animal.css";
 

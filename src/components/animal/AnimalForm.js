@@ -27,26 +27,6 @@ export const AnimalForm = () => {
 
   const history = useHistory();
 
-  /*
-  Reach out to the world and get customers state
-  and locations state on initialization.
-  */
-  // Get customers and locations. If animalId is in the URL, getAnimalById
-  useEffect(() => {
-    getCustomers()
-      .then(getLocations)
-      .then(() => {
-        if (animalId) {
-          getAnimalById(parseInt(animalId)).then((animal) => {
-            setAnimal(animal);
-            setIsLoading(false);
-          });
-        } else {
-          setIsLoading(false);
-        }
-      });
-  }, []);
-
   //When a field changes, update state. The return will re-render
   // and display based on the values in state
   //Controlled component
@@ -63,7 +43,10 @@ export const AnimalForm = () => {
   };
 
   const handleSaveAnimal = () => {
-    if (parseInt(animal.locationId) === 0) {
+    if (
+      parseInt(animal.locationId) === 0 ||
+      parseInt(animal.customerId) === 0
+    ) {
       window.alert("Please select a location");
     } else {
       //disable the button - no extra clicks
@@ -71,16 +54,17 @@ export const AnimalForm = () => {
       if (animalId) {
         //PUT - update
         updateAnimal({
-          id: parseInt(animalId),
+          id: animalId,
           name: animal.name,
           breed: animal.breed,
           locationId: parseInt(animal.locationId),
           customerId: parseInt(animal.customerId),
-        }).then(() => history.push(`/animals/detail/${parseInt(animal.id)}`));
+        }).then(() => history.push("/animals"));
       } else {
         //POST - add
         addAnimal({
           name: animal.name,
+          breed: animal.breed,
           locationId: parseInt(animal.locationId),
           customerId: parseInt(animal.customerId),
         }).then(() => history.push("/animals"));
@@ -88,7 +72,28 @@ export const AnimalForm = () => {
     }
   };
 
-  //since state controlls this component, we no longer need
+  /*
+  Reach out to the world and get customers state
+  and locations state on initialization.
+  */
+  // Get customers and locations. If animalId is in the URL, getAnimalById
+  // Get customers and locations. If animalId is in the URL, getAnimalById
+  useEffect(() => {
+    getCustomers()
+      .then(getLocations)
+      .then(() => {
+        if (animalId) {
+          getAnimalById(animalId).then((animal) => {
+            setAnimal(animal);
+            setIsLoading(false);
+          });
+        } else {
+          setIsLoading(false);
+        }
+      });
+  }, []);
+
+  //since state controls this component, we no longer need
   //useRef(null) or ref
 
   return (
@@ -162,6 +167,7 @@ export const AnimalForm = () => {
           </select>
         </div>
       </fieldset>
+
       <button
         className="btn btn-primary"
         disabled={isLoading}
@@ -169,7 +175,7 @@ export const AnimalForm = () => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
           handleSaveAnimal();
         }}>
-        {animalId ? <>Save Animal</> : <>Add Animal</>}
+        {animalId ? <>Update Animal's Info</> : <>Add New Animal</>}
       </button>
     </form>
   );
