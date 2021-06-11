@@ -34,39 +34,3 @@ export const AnimalList = () => {
     </>
   );
 };
-
-/* /*import React, { useContext, useEffect } from "react";
-import { AnimalContext } from "./AnimalProvider";
-import { Link, useHistory } from "react-router-dom";
-import "./Animal.css";
-
-//orig code: export const AnimalList = ({ history }) => {
-export const AnimalList = () => {
-  const { getAnimals, animals } = useContext(AnimalContext);
-  const history = useHistory()
-
-  // Initialization effect hook -> Go get animal data
-  useEffect(() => {
-    getAnimals();
-  }, []);
-
-  return (
-    <>
-      <h1>Animals</h1>
-
-      <button onClick={() => history.push("/animals/create")}>
-        Add Animal
-      </button>
-
-      <div className="animals">
-        {animals.map((animal) => {
-          return (
-          <Link className="animal" to={`/animals/detail/${animal.id}`} key={animal.id}>
-            {animal.name}
-          </Link>)
-        }),
-      </div>
-        
-    </>
-  
-}; */

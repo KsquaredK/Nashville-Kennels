@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 // This context provides an array of Employee objects, and 2 functions: getEmployee, addEmployee
 import { EmployeeContext } from "./EmployeeProvider";
 import "./Employee.css";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const EmployeeList = () => {
   // This state changes when `getEmployees()` is invoked below
@@ -36,10 +36,9 @@ export const EmployeeList = () => {
               id={`employee--${employee.id}`}
               key={employee.id}>
               <div className="employee__name">
-                <em>Name:</em> {employee.name}
-              </div>
-              <div className="employee__location">
-                <em>Location:</em> {employee.location.name}
+                <Link to={`/employees/detail/${employee.id}`}>
+                  {employee.name}
+                </Link>
               </div>
             </div>
           );
