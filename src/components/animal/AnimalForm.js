@@ -3,10 +3,10 @@ import { LocationContext } from "../location/LocationProvider";
 import { AnimalContext } from "../animal/AnimalProvider";
 import { CustomerContext } from "../customer/CustomerProvider";
 import "./Animal.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 export const AnimalForm = () => {
-  const { addAnimal } = useContext(AnimalContext);
+  const { addAnimal, getAnimalById, updateAnimal } = useContext(AnimalContext);
   const { locations, getLocations } = useContext(LocationContext);
   const { customers, getCustomers } = useContext(CustomerContext);
 
@@ -16,13 +16,11 @@ export const AnimalForm = () => {
 
   Define the initial state of the form inputs with useState()
   */
-
-  const [animal, setAnimal] = useState({
-    name: "",
-    breed: "",
-    locationId: 0,
-    customerId: 0,
-  });
+  //for edit, hold on to state of animal in this view
+  const [animal, setAnimal] = useState({});
+  //wait for data before button is active
+  const [isLoading, setIsLoading] = useState(true);
+  const { animalId } = useParams();
   // useHistory() is a hook function provided by react-router-dom.
   // It allows you to ***immediately use a push() method which you can use
   // to change the URL***. Be sure to import it at the top of the document.
@@ -33,8 +31,20 @@ export const AnimalForm = () => {
   Reach out to the world and get customers state
   and locations state on initialization.
   */
+  // Get customers and locations. If animalId is in the URL, getAnimalById
   useEffect(() => {
-    getCustomers().then(getLocations);
+    getCustomers()
+      .then(getLocations)
+      .then(() => {
+        if (animalId) {
+          getAnimalById(parseInt(animalId)).then((animal) => {
+            setAnimal(animal);
+            setIsLoading(false);
+          });
+        } else {
+          setIsLoading(false);
+        }
+      });
   }, []);
 
   //When a field changes, update state. The return will re-render
@@ -52,37 +62,45 @@ export const AnimalForm = () => {
     setAnimal(newAnimal);
   };
 
-  const handleClickSaveAnimal = (event) => {
-    event.preventDefault(); //Prevents the browser from submitting the form
-
-    const locationId = parseInt(animal.locationId);
-    const customerId = parseInt(animal.customerId);
-
-    if (locationId === 0 || customerId === 0) {
-      window.alert("Please select a location and a customer");
+  const handleSaveAnimal = () => {
+    if (parseInt(animal.locationId) === 0) {
+      window.alert("Please select a location");
     } else {
-      //Invoke addAnimal passing the new animal object as an argument
-      //Once complete, change the url and display the animal list
-
-      const newAnimal = {
-        name: animal.name,
-        breed: animal.breed,
-        locationId: locationId,
-        customerId: customerId,
-      };
-      addAnimal(newAnimal).then(() => history.push("/animals"));
+      //disable the button - no extra clicks
+      setIsLoading(true);
+      if (animalId) {
+        //PUT - update
+        updateAnimal({
+          id: parseInt(animalId),
+          name: animal.name,
+          breed: animal.breed,
+          locationId: parseInt(animal.locationId),
+          customerId: parseInt(animal.customerId),
+        }).then(() => history.push(`/animals/detail/${parseInt(animal.id)}`));
+      } else {
+        //POST - add
+        addAnimal({
+          name: animal.name,
+          locationId: parseInt(animal.locationId),
+          customerId: parseInt(animal.customerId),
+        }).then(() => history.push("/animals"));
+      }
     }
   };
 
+  //since state controlls this component, we no longer need
+  //useRef(null) or ref
+
   return (
     <form className="animalForm">
-      <h2 className="animalForm__title">New Animal</h2>
+      <h2 className="animalForm__title">Tell Us About Your Animal</h2>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="name">Animal name:</label>
+          <label htmlFor="animalName">Animal name:</label>
           <input
             type="text"
-            id="name"
+            id="AnimalName"
+            name="name"
             required
             autoFocus
             className="form-control"
@@ -104,6 +122,7 @@ export const AnimalForm = () => {
             placeholder="Animal breed"
             value={animal.breed}
             onChange={handleControlledInputChange}
+            defaultValue={animal.name}
           />
         </div>
       </fieldset>
@@ -112,7 +131,7 @@ export const AnimalForm = () => {
           <label htmlFor="location">Assign to location: </label>
           <select
             name="locationId"
-            id="locationId"
+            id="animalLocationId"
             className="form-control"
             value={animal.locationId}
             onChange={handleControlledInputChange}>
@@ -127,7 +146,7 @@ export const AnimalForm = () => {
       </fieldset>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="customerId">Customer: </label>
+          <label htmlFor="customer">Customer: </label>
           <select
             name="customer"
             id="customerId"
@@ -143,8 +162,14 @@ export const AnimalForm = () => {
           </select>
         </div>
       </fieldset>
-      <button className="btn btn-primary" onClick={handleClickSaveAnimal}>
-        Save Animal
+      <button
+        className="btn btn-primary"
+        disabled={isLoading}
+        onClick={(event) => {
+          event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
+          handleSaveAnimal();
+        }}>
+        {animalId ? <>Save Animal</> : <>Add Animal</>}
       </button>
     </form>
   );

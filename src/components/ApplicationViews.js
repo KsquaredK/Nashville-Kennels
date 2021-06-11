@@ -12,10 +12,18 @@ import { AnimalProvider } from "./animal/AnimalProvider";
 import { AnimalList } from "./animal/AnimalList";
 import { AnimalForm } from "./animal/AnimalForm";
 import { AnimalDetail } from "./animal/AnimalDetail";
+import logo from "./auth/logo.png";
 
 export const ApplicationViews = () => {
   return (
     <>
+      <Route exact path="/">
+        <h1>Nashville Kennels</h1>
+        <small>Loving care when you're not there.</small>
+        <div className="logo">
+          <img src={logo} />
+        </div>
+      </Route>
       <LocationProvider>
         <AnimalProvider>
           <EmployeeProvider>
@@ -29,19 +37,22 @@ export const ApplicationViews = () => {
               <Route path="/animals">
                 <AnimalList />
               </Route>
-              <Route exact path="/animals/create">
+              <Route path="/animals/create">
                 <AnimalForm />
               </Route>
-              <Route exact path="/animals/detail/:animalId(\d+)">
+              <Route path="/animals/detail/:animalId(\d+)">
                 <AnimalDetail />
               </Route>
-              <Route exact path="/customers">
+              <Route path="/animals/edit/:animalId(\d+)">
+                <AnimalDetail />
+              </Route>
+              <Route path="/customers">
                 <CustomerList />
               </Route>
-              <Route exact path="/employees">
+              <Route path="/employees">
                 <EmployeeList />
               </Route>
-              <Route exact path="/employees/create">
+              <Route path="/employees/create">
                 <EmployeeForm />
               </Route>
             </CustomerProvider>
@@ -51,11 +62,3 @@ export const ApplicationViews = () => {
     </>
   );
 };
-
-/* Render the location list when http://localhost:3000/ */
-/* Exact is needed on first route to differentiate it from others, 
-            or else Home will render for every route */
-
-/* Render the animal list when http://localhost:3000/animals */
-/* Render the customer list when http://localhost:3000/customers */
-/* Render the employee list when http://localhost:3000/Employees */
