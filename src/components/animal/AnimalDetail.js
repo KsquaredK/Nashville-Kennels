@@ -32,13 +32,6 @@ export const AnimalDetail = () => {
 
   return (
     <section className="animal">
-      <button
-        onClick={() => {
-          history.push(`/animals/edit/${animal.id}`);
-        }}>
-        Edit your pet's info
-      </button>
-      <p></p>
       <button onClick={handleRelease}>Release Animal</button>
       <h3 className="animal__name">{animal.name}</h3>
       <div className="animal__breed">{animal.breed}</div>
@@ -47,3 +40,4 @@ export const AnimalDetail = () => {
     </section>
   );
 };
+
