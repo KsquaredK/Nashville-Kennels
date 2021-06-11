@@ -10,29 +10,43 @@ export const AnimalForm = () => {
   const { locations, getLocations } = useContext(LocationContext);
   const { customers, getCustomers } = useContext(CustomerContext);
 
+  /*
+  With React, we do not target the DOM with `document.querySelector()`. 
+  Instead, our return (render) reacts to state or props.
+
+  Define the initial state of the form inputs with useState()
+  */
   //for edit, hold on to state of animal in this view
   const [animal, setAnimal] = useState({});
   //wait for data before button is active
   const [isLoading, setIsLoading] = useState(true);
-
   const { animalId } = useParams();
+  // useHistory() is a hook function provided by react-router-dom.
+  // It allows you to ***immediately use a push() method which you can use
+  // to change the URL***. Be sure to import it at the top of the document.
+
   const history = useHistory();
 
-  //when field changes, update state. This causes a re-render and updates the view.
+  //When a field changes, update state. The return will re-render
+  // and display based on the values in state
   //Controlled component
   const handleControlledInputChange = (event) => {
-    //When changing a state object or array,
-    //always create a copy make changes, and then set state.
+    /* When changing a state object or array,
+    always create a copy, make changes, and then set state.*/
     const newAnimal = { ...animal };
-    //animal is an object with properties.
-    //set the property to the new value
-    newAnimal[event.target.name] = event.target.value;
-    //update state
+    /* Animal is an object with properties.
+    Set the property to the new value
+    using object bracket notation. */
+    newAnimal[event.target.id] = event.target.value;
+    // update state
     setAnimal(newAnimal);
   };
 
   const handleSaveAnimal = () => {
-    if (parseInt(animal.locationId) === 0) {
+    if (
+      parseInt(animal.locationId) === 0 ||
+      parseInt(animal.customerId) === 0
+    ) {
       window.alert("Please select a location");
     } else {
       //disable the button - no extra clicks
@@ -40,15 +54,17 @@ export const AnimalForm = () => {
       if (animalId) {
         //PUT - update
         updateAnimal({
-          id: animal.id,
+          id: animalId,
           name: animal.name,
+          breed: animal.breed,
           locationId: parseInt(animal.locationId),
           customerId: parseInt(animal.customerId),
-        }).then(() => history.push(`/animals/detail/${animal.id}`));
+        }).then(() => history.push("/animals"));
       } else {
         //POST - add
         addAnimal({
           name: animal.name,
+          breed: animal.breed,
           locationId: parseInt(animal.locationId),
           customerId: parseInt(animal.customerId),
         }).then(() => history.push("/animals"));
@@ -56,6 +72,11 @@ export const AnimalForm = () => {
     }
   };
 
+  /*
+  Reach out to the world and get customers state
+  and locations state on initialization.
+  */
+  // Get customers and locations. If animalId is in the URL, getAnimalById
   // Get customers and locations. If animalId is in the URL, getAnimalById
   useEffect(() => {
     getCustomers()
@@ -72,7 +93,7 @@ export const AnimalForm = () => {
       });
   }, []);
 
-  //since state controlls this component, we no longer need
+  //since state controls this component, we no longer need
   //useRef(null) or ref
 
   return (
@@ -80,15 +101,31 @@ export const AnimalForm = () => {
       <h2 className="animalForm__title">Tell Us About Your Animal</h2>
       <fieldset>
         <div className="form-group">
-          <label htmlFor="animalName">Animal name: </label>
+          <label htmlFor="animalName">Animal name:</label>
           <input
             type="text"
-            id="animalName"
+            id="AnimalName"
             name="name"
             required
             autoFocus
             className="form-control"
             placeholder="Animal name"
+            value={animal.name}
+            onChange={handleControlledInputChange}
+          />
+        </div>
+      </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor="name">Animal breed:</label>
+          <input
+            type="text"
+            id="breed"
+            required
+            autoFocus
+            className="form-control"
+            placeholder="Animal breed"
+            value={animal.breed}
             onChange={handleControlledInputChange}
             defaultValue={animal.name}
           />
@@ -98,10 +135,10 @@ export const AnimalForm = () => {
         <div className="form-group">
           <label htmlFor="location">Assign to location: </label>
           <select
-            value={animal.locationId}
             name="locationId"
-            id="animalLocation"
+            id="animalLocationId"
             className="form-control"
+            value={animal.locationId}
             onChange={handleControlledInputChange}>
             <option value="0">Select a location</option>
             {locations.map((l) => (
@@ -116,10 +153,10 @@ export const AnimalForm = () => {
         <div className="form-group">
           <label htmlFor="customer">Customer: </label>
           <select
-            value={animal.customerId}
-            name="customerId"
-            id="customerAnimal"
+            name="customer"
+            id="customerId"
             className="form-control"
+            value={animal.customerId}
             onChange={handleControlledInputChange}>
             <option value="0">Select a customer</option>
             {customers.map((c) => (
@@ -130,6 +167,7 @@ export const AnimalForm = () => {
           </select>
         </div>
       </fieldset>
+
       <button
         className="btn btn-primary"
         disabled={isLoading}
@@ -137,7 +175,7 @@ export const AnimalForm = () => {
           event.preventDefault(); // Prevent browser from submitting the form and refreshing the page
           handleSaveAnimal();
         }}>
-        {animalId ? <>Save Animal</> : <>Add Animal</>}
+        {animalId ? <>Update Animal's Info</> : <>Add New Animal</>}
       </button>
     </form>
   );
