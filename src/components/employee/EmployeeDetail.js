@@ -5,7 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 export const EmployeeDetail = () => {
   const { employees, releaseEmployee } = useContext(EmployeeContext);
-  const [employee, setEmployee] = useState({ location: {}, customer: {} });
+  const [employee, setEmployee] = useState({ location: {} });
 
   /*
         Given the example URL above, this will store the value
@@ -22,11 +22,10 @@ export const EmployeeDetail = () => {
   };
 
   useEffect(() => {
-    const thisEmployee = employee.find(
+    const thisEmployee = employees.find(
       (e) => e.id === parseInt(employeeId)
     ) || {
       location: {},
-      customer: {},
     };
 
     setEmployee(thisEmployee);
@@ -34,13 +33,18 @@ export const EmployeeDetail = () => {
 
   return (
     <section className="employee">
+      <button
+        onClick={() => {
+          history.push(`/employees/edit/${employee.id}`);
+        }}>
+        Edit Your Employee's Info
+      </button>
+      <p></p>
       <button onClick={handleRelease}>Release Employee</button>
       <h3 className="employee__name">{employee.name}</h3>
-      <div className="employee__breed">{employee.breed}</div>
       <div className="employee__location">
         Location: {employee.location.name}
       </div>
-      <div className="employee__owner">Customer: {employee.customer.name}</div>
     </section>
   );
 };

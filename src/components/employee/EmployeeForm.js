@@ -129,3 +129,18 @@ export const EmployeeForm = () => {
     </form>
   );
 };
+
+/**** Pseudo-code: edit employee ***
+- Create route in ApplicationViews for editing EmployeeForm
+- Create updateEmployee fetch PUT request in provider, and expose in Employee Context
+- Create removeEmployee fetch DELETE request in provider, and expose in EmployeeContext
+- Create getEmployeeById fetch request, expose in context
+
+- Add logic to form: 
+  if an employee's id has been matched via useParams, render edit form, 
+  and add update (save) button to Employee form (see animals), 
+  and add a release button to form
+
+- State updates in real time with user input. 
+
+*/
