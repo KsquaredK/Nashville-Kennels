@@ -22,28 +22,42 @@ export const EmployeeList = () => {
   const history = useHistory();
 
   return (
-    <>
-      <h2>Employees</h2>
-      <button onClick={() => history.push("/employees/create")}>
-        Add Employee
-      </button>
-      <p></p>
-      <section className="employees">
-        {employees.map((employee) => {
-          return (
-            <div
-              className="employee"
-              id={`employee--${employee.id}`}
-              key={employee.id}>
-              <div className="employee__name">
-                <Link to={`/employees/detail/${employee.id}`}>
-                  {employee.name}
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </section>
-    </>
+    <section className="employee">
+      <button onClick={handleRelease}>Release Employee</button>
+      <h3 className="employee__name">{employee.name}</h3>
+      <div className="employee__breed">{employee.breed}</div>
+      <div className="employee__location">
+        Location: {employee.location.name}
+      </div>
+      <div className="employee__owner">Customer: {employee.customer.name}</div>
+    </section>
   );
 };
+
+{
+  /* <>
+<h2>Employees</h2>
+<button onClick={() => history.push("/employees/create")}>
+  Add Employee
+</button>
+<p></p>
+<section className="employees">
+  {employees.map((employee) => {
+    return (
+      <div
+        className="employee"
+        id={`employee--${employee.id}`}
+        key={employee.id}>
+        <div className="employee__name">
+          <Link to={`/employees/detail/${employee.id}`}>
+            {employee.name}
+          </Link>
+        </div>
+      </div>
+    );
+  })}
+</section>
+</>
+);
+}; */
+}
