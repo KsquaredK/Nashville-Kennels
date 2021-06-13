@@ -10,6 +10,7 @@ export const AnimalContext = createContext();
 export const AnimalProvider = (props) => {
   // defines a variable that holds the state, and a function that updates it
   const [animals, setAnimals] = useState([]);
+  const [searchTerms, setSearchTerms] = useState("");
 
   const getAnimals = () => {
     // animals: fetch that dataset. expand=customer: include related customer. sort=location.id: sort data by the location id.
@@ -69,6 +70,8 @@ export const AnimalProvider = (props) => {
         releaseAnimal,
         updateAnimal,
         getAnimalById,
+        searchTerms,
+        setSearchTerms,
       }}>
       {props.children}
     </AnimalContext.Provider>
